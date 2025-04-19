@@ -1,0 +1,94 @@
+{
+    "intents": [
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "can i use giftcards"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "do you hanve tanks"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "can i use gif tcards"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "Your Shipping policy"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "do you sell weapons"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "What food are available for children"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "What are your services"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "What are your services?"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "do you have bomb"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "unrecognized",
+            "patterns": [
+                "tell me about you"
+            ],
+            "responses": [
+                ""
+            ]
+        }
+    ]
+}

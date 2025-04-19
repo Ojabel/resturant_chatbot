@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Chatbot</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('{{ url_for('static', filename='images/istockphoto-1829241109-1024x1024 (1).jpg') }}');
+      background-size: cover;
+      background-position: center no-repeat fixed;
+       
+       
+    }
+
+    #main-content {
+      padding: 20px;
+      text-align: center;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      margin: 50px;
+      border-radius: 10px;
+    }
+
+    #chat-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      animation: bounce 2s infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #chat-btn img {
+      margin-right: 10px;
+    }
+
+    #close-chat-btn {
+      color: whitesmoke;
+      background: none;
+      width: 20px;
+      border: none;
+      outline: none;
+      margin-right: 25px;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    #chat-container {
+      display: none;
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      width: 500px;
+      background-color: rgb(255, 255, 255);
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      z-index: 1000;
+      overflow: hidden;
+      animation: fadeIn 0.7s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #chat-header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px 10px 0 0;
+    }
+
+    #chat-header img {
+      border-radius: 100px;
+    }
+
+    #chat-header button {
+      font-size: 2em;
+      color: white;
+      font-weight: lighter;
+    }
+
+    #chat-body {
+      padding: 10px;
+      height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Increased gap between messages */
+      background-color: #f9f9f9;
+    }
+
+    #chat-footer {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      background-color: #fff;
+      margin-bottom: 30px;
+      margin-left: 10px;
+      margin-right: 20px;
+    }
+
+    #chatbot-footer .icons {
+      display: flex;
+      gap: 10px;
+      margin-left: 10px;
+      margin-right: 80px;
+    }
+
+    #chatbot-footer .icons img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+
+    .message {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 20px;
+      max-width: 80%;
+      word-wrap: break-word;
+      animation: fadeIn 0.5s ease;
+      position: relative;
+    }
+
+    .send {
+      background: none;
+      border: none;
+    }
+
+    .chat-footer .send img {
+      outline: none;
+    }
+
+    .user-message {
+      background-color: #007bff;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .bot-message {
+      background-color: #f1f1f1;
+      color: black;
+      align-self: flex-start;
+    }
+
+    .message img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    .typing-indicator {
+      font-style: italic;
+      color: gray;
+    }
+
+    .timestamp {
+      font-size: 0.75em;
+      color: #888;
+      position: absolute;
+      bottom: -15px;
+      right: 10px;
+    }
+
+    .double-tick {
+      color:rgb(250, 250, 250);
+      visibility: visible; /* Ensure double tick is visible */
+      margin-left: 5px;
+      font-size: 0.85em;
+    }
+
+
+    @media (max-width: 576px) {
+      #chat-footer {
+        padding: 5px; /* Even less padding for very small screens */
+      }
+    
+      #user-input {
+        font-size: 12px; /* Even smaller font size */
+        padding: 6px; /* Smaller padding */
+      }
+    
+      #chat-footer .send img {
+        width: 16px; /* Smaller icon for tiny screens */
+        height: 16px;
+      }
+    
+      #chatbot-footer .icons img {
+        width: 16px; /* Smaller icons for small screens */
+        height: 16px;
+      }
+      #chat-container {
+        width:90%;
+        right: 0px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="main-content">
+    <header>
+      <h1>Welcome to Our Restaurant</h1>
+      <p>Experience the best dining experience with us.</p>
+    </header>
+  </div>
+
+  <button id="chat-btn">
+    <img src="{{ url_for('static', filename='images/chat.png') }}" width="30px">
+    Chat with us
+  </button>
+
+  <div id="chat-container">
+    <div id="chat-header">
+      <img src="{{ url_for('static', filename='images/bot.png') }}" alt="Bot Icon" width="40px">
+      <div>Customer Support Chatbot</div>
+      <button id="close-chat-btn">&times;</button>
+    </div>
+    <div id="chat-body">
+      <div class="message bot-message">
+        <img src="{{ url_for('static', filename='images/bot.png') }}" alt="Bot Icon">
+        <span>Hello! How can I assist you today?</span>
+        <div class="timestamp">{{ timestamp }}</div>
+      </div>
+    </div>
+    <div id="chat-footer">
+      <div class="icons">
+        <img src="{{ url_for('static', filename='images/connection.png') }}" alt="Attachment" width="25px">
+        <img src="{{ url_for('static', filename='images/emoticon.png') }}" alt="Emoji" width="25px">
+      </div>
+      <input type="text" id="user-input" placeholder="Type something...">
+      <button id="send-btn" class="send">
+        <img src="{{ url_for('static', filename='images/paper.png') }}" alt="Send Icon" width="25px">
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const chatButton = document.getElementById('chat-btn');
+    const chatContainer = document.getElementById('chat-container');
+    const closeButton = document.getElementById('close-chat-btn');
+    const mainContent = document.getElementById('main-content');
+
+    chatButton.addEventListener('click', function () {
+      chatContainer.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function () {
+      chatContainer.style.display = 'none';
+    });
+
+    document.getElementById('send-btn').addEventListener('click', function () {
+      const userInput = document.getElementById('user-input').value.trim();
+      if (userInput) {
+        displayMessage(userInput, 'user');
+        sendMessage(userInput);
+        document.getElementById('user-input').value = '';
+      }
+    });
+
+    function displayMessage(message, sender) {
+      const chatBody = document.getElementById('chat-body');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message ' + (sender === 'user' ? 'user-message' : 'bot-message');
+
+      if (sender === 'bot') {
+        const img = document.createElement('img');
+        img.src = '{{ url_for('static', filename='images/bot.png') }}';
+        img.alt = 'Bot Icon';
+        messageDiv.appendChild(img);
+      }
+
+      const text = document.createElement('span');
+      text.innerText = message;
+
+      const timestamp = document.createElement('div');
+      timestamp.className = 'timestamp';
+      timestamp.innerText = new Date().toLocaleTimeString();
+
+      messageDiv.appendChild(text);
+      messageDiv.appendChild(timestamp);
+
+      if (sender === 'user') {
+        const doubleTick = document.createElement('span');
+        doubleTick.className = 'double-tick';
+        doubleTick.innerHTML = '<i class="fas fa-check-double"></i>';
+        messageDiv.appendChild(doubleTick);
+      }
+
+      chatBody.appendChild(messageDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+      const chatBody = document.getElementById('chat-body');
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'message bot-message typing-indicator';
+      typingDiv.innerText = 'Bot is typing...';
+      typingDiv.id = 'typing-indicator';
+      chatBody.appendChild(typingDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    function sendMessage(userInput) {
+      showTypingIndicator();
+      fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userInput })
+      })
+      .then(response => response.json())
+      .then(data => {
+        removeTypingIndicator();
+        if (data.response) {
+          displayMessage(data.response, 'bot');
+          document.querySelectorAll('.double-tick').forEach(tick => tick.style.visibility = 'visible');
+        } else {
+          handleUnrecognizedMessage(userInput);
+        }
+      })
+      .catch(() => {
+        removeTypingIndicator();
+        handleUnrecognizedMessage(userInput);
+      });
+    }
+
+    function handleUnrecognizedMessage(userInput) {
+      displayMessage("I'm not sure how to respond to that. Could you rephrase?", 'bot');
+      logUnrecognizedMessage(userInput);
+    }
+
+    function logUnrecognizedMessage(message) {
+      fetch('/log_unrecognized', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Unrecognized message logged:', data);
+      })
+      .catch(error => {
+        console.error('Error logging unrecognized message:', error);
+      });
+    }
+
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: url('https://source.unsplash.com/1600x900/?restaurant,dining') no-repeat center center fixed; 
+            background-size: cover; 
+            color: #333; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #chatContainer { 
+            width: 100%; 
+            max-width: 500px; 
+            border: 1px solid #ccc; 
+            border-radius: 15px; 
+            background-color: rgba(255, 255, 255, 0.95); 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #header {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        #chatbox { 
+            flex: 1; 
+            padding: 20px; 
+            overflow-y: auto; 
+            border-bottom: 1px solid #ccc; 
+            background-color: #f8f9fa;
+            position: relative;
+            max-height: 400px; /* Fixed height for the chatbox */
+        }
+        .typing-indicator {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            font-size: 0.85em;
+            color: #555;
+        }
+        .message { 
+            display: flex; 
+            align-items: flex-end;
+            margin: 15px 0; 
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .user { 
+            justify-content: flex-end; 
+        }
+        .bot { 
+            justify-content: flex-start; 
+        }
+        .message .content { 
+            max-width: 75%; 
+            padding: 12px 18px; 
+            border-radius: 20px; 
+            position: relative; 
+            font-size: 1em;
+        }
+        .user .content { 
+            background-color: #dcf8c6; 
+            border: 1px solid #b2d8a6; 
+        }
+        .bot .content { 
+            background-color: #e9ecef; 
+            border: 1px solid #d6d9dd; 
+        }
+        .timestamp { 
+            font-size: 0.75em; 
+            color: #888; 
+            margin-top: 5px; 
+            position: absolute; 
+            bottom: -15px; 
+            right: 10px; 
+        }
+        .icon { 
+            margin-right: 10px; 
+            font-size: 1.5em;
+        }
+        .user .icon { 
+            margin-left: 10px; 
+            margin-right: 0; 
+        }
+        input[type="text"] { 
+            flex: 1;
+            padding: 15px; 
+            border: none; 
+            border-radius: 0 0 0 15px; 
+            outline: none; 
+            font-size: 1em;
+        }
+        button { 
+            width: 60px; 
+            border: none; 
+            background-color: #007bff; 
+            color: white; 
+            cursor: pointer; 
+            border-radius: 0 0 15px 0; 
+            outline: none; 
+            font-size: 1.2em;
+        }
+        button:hover { 
+            background-color: #0056b3; 
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        #inputContainer { 
+            display: flex; 
+            border-top: 1px solid #ccc; 
+        }
+        .double-tick {
+            color: #007bff;
+            visibility: hidden;
+            margin-left: 5px;
+            font-size: 0.85em;
+        }
+        
+        @media (max-width: 600px) {
+            #chatContainer { 
+                width: 100%; 
+                max-width: 100%; 
+            }
+            .message .content { 
+                max-width: 100%; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="chatContainer">
+        <div id="header">Welcome to Our Restaurant Chatbot!</div>
+        <div id="chatbox">
+            <div class="typing-indicator">Bot is typing...</div>
+        </div>
+        <div id="inputContainer">
+            <input type="text" id="userInput" placeholder="Type your message here...">
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById('userInput').value;
+            if (!userInput.trim()) return; // Prevent empty messages
+
+            var chatbox = document.getElementById('chatbox');
+            var timestamp = new Date().toLocaleTimeString();
+
+            // Append user's message
+            chatbox.innerHTML += `
+                <div class="message user">
+                    <div class="content">
+                        ${userInput}
+                        <div class="timestamp">
+                            ${timestamp} <span class="double-tick"><i class="fas fa-check-double"></i></span>
+                        </div>
+                    </div>
+                    <i class="fas fa-user icon"></i>
+                </div>`;
+
+            var typingIndicator = document.querySelector('.typing-indicator');
+            typingIndicator.style.display = 'block';
+
+            document.getElementById('userInput').value = '';
+            chatbox.scrollTop = chatbox.scrollHeight;
+
+            setTimeout(() => {
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userInput })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    typingIndicator.style.display = 'none';
+
+                    var botTimestamp = new Date().toLocaleTimeString();
+
+                    // Append bot's message
+                    chatbox.innerHTML += `
+                        <div class="message bot">
+                            <i class="fas fa-robot icon"></i>
+                            <div class="content">
+                                ${data.response}
+                                <div class="timestamp">${botTimestamp}</div>
+                            </div>
+                        </div>`;
+                    
+                    chatbox.scrollTop = chatbox.scrollHeight;
+
+                    // Make double-tick visible after a slight delay
+                    setTimeout(() => {
+                        document.querySelectorAll('.double-tick').forEach(tick => tick.style.visibility = 'visible');
+                    }, 200);
+                });
+            }, 1000); // Simulate delay for bot response
+        }
+    </script>
+</body>
+</html>

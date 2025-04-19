@@ -1,0 +1,224 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": [
+                "Hi",
+                "Hey",
+                "Hello",
+                "Good morning!",
+                "Hey! Good morning",
+                "Hey there",
+                "Very good morning",
+                "A very good morning to you"
+            ],
+            "responses": [
+                "Hello! Welcome to Restrobot! How can I assist you today?",
+                "Hi! I'm Restrobot. How can I make your day easier today? 😊"
+            ],
+            "follow_up": [
+                "Are you looking for a specific menu item or something else?",
+                "Feel free to ask me anything about our restaurant!"
+            ]
+        },
+        {
+            "tag": "goodbye",
+            "patterns": [
+                "Goodbye",
+                "See you later",
+                "Bye",
+                "Farewell",
+                "Catch you later",
+                "Talk to you soon"
+            ],
+            "responses": [
+                "Goodbye! It was a pleasure assisting you. Hope to see you again soon!",
+                "Take care! We're here whenever you need us!"
+            ],
+            "follow_up": [
+                "Is there anything else I can help you with before you go?",
+                "Don't hesitate to reach out if you need anything in the future!"
+            ]
+        },
+        {
+            "tag": "restaurant_menu",
+            "patterns": [
+                "What's on the menu?",
+                "Can I see the menu?",
+                "What do you serve?",
+                "What’s for lunch/dinner?"
+            ],
+            "responses": [
+                "We offer a wide variety of dishes, including appetizers, entrees, desserts, and drinks. Would you like me to highlight some of our top picks?",
+                "Our menu features both local and international cuisines. Are you in the mood for something specific today?"
+            ],
+            "follow_up": [
+                "Would you like recommendations from our chef’s specials?",
+                "Is there a particular type of food you're craving today?"
+            ]
+        },
+        {
+            "tag": "restaurant_hours",
+            "patterns": [
+                "What are your opening hours?",
+                "When do you open?",
+                "When do you close?",
+                "What time do you open and close?"
+            ],
+            "responses": [
+                "We're open from 10 AM to 11 PM every day. So, there's always time to grab a meal with us!",
+                "We operate from 10 AM to 11 PM, seven days a week! Would you like to make a reservation?"
+            ],
+            "follow_up": [
+                "Do you need help finding the best time to visit?",
+                "Is there a specific day you’re planning to come by?"
+            ]
+        },
+        {
+            "tag": "specials",
+            "patterns": [
+                "Do you have any specials?",
+                "What are the special offers today?",
+                "Are there any discounts or promotions?"
+            ],
+            "responses": [
+                "Today's special is grilled salmon with roasted vegetables! It's 20% off for today only! 😋",
+                "We have a 2-for-1 pizza offer going on today! Would you like to try it out?"
+            ],
+            "follow_up": [
+                "Would you like me to tell you more about our other offers?",
+                "Is there anything specific you’re looking to try?"
+            ]
+        },
+        {
+            "tag": "reservations",
+            "patterns": [
+                "Can I make a reservation?",
+                "I want to reserve a table",
+                "Do I need to book a table?"
+            ],
+            "responses": [
+                "Of course! You can make a reservation by calling us or directly on our website. Would you like to reserve for a specific date and time?",
+                "I'd be happy to help you book a table! Let me know the number of people, date, and time."
+            ],
+            "follow_up": [
+                "What time would be most convenient for you?",
+                "How many people will be joining you?"
+            ]
+        },
+        {
+            "tag": "order_status",
+            "patterns": [
+                "Where is my order?",
+                "How long until my food arrives?",
+                "What’s the status of my order?"
+            ],
+            "responses": [
+                "I don’t have direct access to order details, but you can check the status at the counter or give us a quick call!",
+                "Unfortunately, I can’t track your order, but feel free to ask one of our team members for an update!"
+            ],
+            "follow_up": [
+                "Would you like me to help you with anything else while you wait?",
+                "Need help with your next order?"
+            ]
+        },
+        {
+            "tag": "cuisine_type",
+            "patterns": [
+                "What type of food do you serve?",
+                "What cuisines do you offer?",
+                "What kind of food do you specialize in?"
+            ],
+            "responses": [
+                "We serve a variety of dishes from Italian to Mexican, and we have some amazing local delicacies too. What are you in the mood for?",
+                "Our menu features a fusion of local flavors and international dishes. We have vegan and vegetarian options as well!"
+            ],
+            "follow_up": [
+                "Do you have any dietary preferences I should keep in mind?",
+                "Are you craving something light or hearty today?"
+            ]
+        },
+        {
+            "tag": "restaurant_location",
+            "patterns": [
+                "Where are you located?",
+                "Where is your restaurant?",
+                "What's your address?",
+                "How do I get to your restaurant?"
+            ],
+            "responses": [
+                "We're located at 123 Food Street, Downtown City. I can guide you on how to get here if needed!",
+                "Our address is 123 Food Street, Downtown City. Want me to help you with directions?"
+            ],
+            "follow_up": [
+                "Do you need help with directions or nearby landmarks?",
+                "Are you traveling by car or public transport?"
+            ]
+        },
+        {
+            "tag": "contact_info",
+            "patterns": [
+                "How can I contact you?",
+                "What's your phone number?",
+                "Do you have an email?",
+                "How can I reach the restaurant?"
+            ],
+            "responses": [
+                "You can reach us by calling (123) 456-7890 or emailing info@restaurant.com. How can I assist you further?",
+                "Feel free to contact us at (123) 456-7890 for any questions or concerns."
+            ],
+            "follow_up": [
+                "Is there something specific you’d like to discuss?",
+                "Would you like to schedule a call or email us?"
+            ]
+        },
+        {
+            "tag": "feedback",
+            "patterns": [
+                "I want to leave feedback",
+                "How do I give feedback?",
+                "I want to review my experience"
+            ],
+            "responses": [
+                "We’d love to hear your thoughts! Please share your experience directly on our website or leave a review on Google.",
+                "We value your feedback! You can leave a review on our website or any review platform of your choice."
+            ],
+            "follow_up": [
+                "Was there anything specific that made your experience memorable or that we can improve?"
+            ]
+        },
+        {
+            "tag": "thank_you",
+            "patterns": [
+                "Thank you",
+                "Thanks",
+                "Thanks a lot",
+                "I appreciate it"
+            ],
+            "responses": [
+                "You're very welcome! If you need anything else, just let me know! 😊",
+                "Anytime! It’s my pleasure to assist you. Have a great day!"
+            ],
+            "follow_up": [
+                "Is there anything else I can help you with?",
+                "Would you like more information on our menu or specials?"
+            ]
+        },
+        {
+            "tag": "payment_methods",
+            "patterns": [
+                "What payment methods do you accept?",
+                "Can I pay by card?",
+                "Do you accept mobile payments?",
+                "What are the available payment options?"
+            ],
+            "responses": [
+                "We accept credit cards, debit cards, mobile payments, and cash. What payment method would you prefer?",
+                "You can pay via card, mobile payment, or cash. What works best for you today?"
+            ],
+            "follow_up": [
+                "Do you need help with anything else related to payments?"
+            ]
+        }
+    ]
+}
